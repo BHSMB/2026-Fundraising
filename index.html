@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundraising Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>BHSMB 2026 Fundraising</h1>
+        <button id="nav-login-btn">Member Login</button>
+        <button id="logout-btn" class="hidden">Log Out</button>
+    </header>
+
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="card-container modal-content">
+            <span id="close-modal-btn">&times;</span>
+            <h2>Member Login</h2>
+            <p>Don't forget to capitalize!</p>
+            <p id="login-error" style="color: red; display: none;">Invalid! Try Again?</p>
+            <form id="login-form">
+                <input type="text" id="first-input" placeholder="First Name" required>
+                <input type="text" id="surname-input" placeholder="Last Name" required>
+                <button type="submit">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="growth-chart-wrapper" class="card-container hidden">
+        <h3 style="margin-top: 0; margin-bottom: 15px;">Your Donation Growth Chart</h3>
+        <div style="position: relative; height: 400px; width: 100%;">
+            <canvas id="growthChartCanvas"></canvas>
+        </div>
+    </div>
+
+    <div id="history-chart-wrapper" class="card-container hidden">
+        <h3 id="history-chart-title" style="margin-top: 0; margin-bottom: 15px;">Donation Breakdown History</h3>
+        <div style="position: relative; height: 400px; width: 100%;">
+            <canvas id="historyChartCanvas"></canvas>
+        </div>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div id="tracker-container" class="card-container">
+            <h2>Fundraiser Progress</h2>
+            
+            <div class="countdown-container">
+                <h3>Time Until Hershey Park!</h3>
+                <div id="countdown-timer">00d : 00h : 00m : 00s</div>
+            </div>
+
+            <div class="stats">
+                <p>Total Raised: <span id="raised-amount">Loading...</span></p>
+                <p>Goal: <span id="goal-amount">$30,000</span></p>
+            </div>
+
+            <div class="progress-bar-bg" style="position: relative; display: flex; align-items: center; justify-content: center;">
+    
+                <div id="progress-fill" style="background-color: #2ecc71; width: 100%; position: absolute; bottom: 0; height: 0%; transition: height 0.4s ease; z-index: 1;"></div>
+    
+                    <span id="progress-percentage-label" style="position: relative; font-weight: bold; font-size: 16px; color: #ffffff; z-index: 2;">0%</span>
+    
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
