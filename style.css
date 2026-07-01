@@ -1,4 +1,4 @@
-/* Reset and global styles */
+/*reset and global styles*/
 * {
     box-sizing: border-box;
     margin: 0;
@@ -10,36 +10,19 @@ body {
     margin: 0;
     background-color: #f4f7f6;
 
-    /* 
-       LAYER ORDER (Top to Bottom):
-       1. Top Image (positioned lower to create the overlap)
-       2. Bottom Image (positioned at the top)
-    */
     background-image: 
         url('https://scontent-lga3-2.xx.fbcdn.net/v/t51.82787-15/548534578_18339566383202726_6121281175142940067_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x960&ctp=s1440x960&_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=XnrTqPMnEl8Q7kNvwG5Ucel&_nc_oc=AdqrzLsb0jupWfuz_kZDx05ksq3rmQHza-IobbSljHAqn4Y-aQLKyk2MdJQAXQUElPF9xiC5A2ZxyU0gzDbn4AO0&_nc_zt=23&_nc_ht=scontent-lga3-2.xx&_nc_gid=TD0f7TKp5ll7lcW5N1E4dg&_nc_ss=70289&oh=00_AQB7rgGH4E_Ai5MtXJ7V3c9RMARMKKNxZTPLoYHSgoIZ-g&oe=6A49E77B'), 
         url('https://scontent-lga3-3.xx.fbcdn.net/v/t39.30808-6/573349603_1292951775967553_5159448606670494206_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1376&ctp=s2048x1376&_nc_cat=102&ccb=1-7&_nc_sid=f727a1&_nc_ohc=nk_N0_ZzZWYQ7kNvwHp55QU&_nc_oc=Adqigjt5Rx6VuGYXUw2dJNOGYJFCph6u-mjb_cCiWRcEsEAhq9oIvWMA4UDiFihy-UiTcgfP-v4s5a_IYcDmc0m_&_nc_zt=23&_nc_ht=scontent-lga3-3.xx&_nc_gid=ZjnHVEwU0K27PvmmLsLB_w&_nc_ss=70289&oh=00_AQBi2kBNWBRLI_3CgV8HE6oziaraONsc37KxrU9BJ_LvIg&oe=6A49FA97'),
         url('https://scontent-lga3-2.xx.fbcdn.net/v/t51.82787-15/548167648_18339566374202726_7921824186489740623_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x960&ctp=s1440x960&_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=hBtuKQuUXisQ7kNvwFVTmXS&_nc_oc=Adp_-E7veGUPlFwDPNvTzE8ql14z4VbFrFCT04WuBNg_90atdWwIru8kp4DST6efY_ArW94YgfsC7nhhYdEGnNFL&_nc_zt=23&_nc_ht=scontent-lga3-2.xx&_nc_gid=w6AbjT_S-zbmepYVSfZ5PQ&_nc_ss=70289&oh=00_AQC_oF9hmdInMyGNPUhLa3dQwbIavaz-1nczbQ6cWWMd2Q&oe=6A49E6D6');
 
-    /* 
-       SIZING:
-       Both images span 100% width. 
-       Adjust the height (e.g., 600px) depending on how tall you want each background section to be.
-    */
     background-size: 100%, 100%, 100%; 
 
-    /* 
-       THE OVERLAP TRICK:
-       Image 1 starts 500px down the page.
-       Image 2 starts 0px down the page (at the very top).
-       Since both are 600px tall, Image 1 will physically overlap the bottom 100px of Image 2!
-    */
     background-position: left 0 top 900px, left 0 top 0px, left 0 top 1600px;
     
     background-repeat: no-repeat, no-repeat;
     background-attachment: scroll; 
     margin: 0;
 
-    /* Your existing flex layout for your website content */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -48,7 +31,7 @@ body {
     padding: 100px 20px 40px 20px;
 }
 
-/* Header styling to push the button to the corner */
+/*header styling to push the button to the corner*/
 .main-header {
     position: absolute;
     top: 0;
@@ -67,18 +50,17 @@ body {
     flex-direction: column;
     gap: 25px;
     width: 100%;
-    max-width: 900px; /* Expanded from 460px to allow a larger layout */
+    max-width: 900px;
     justify-content: center;
     align-items: center;
 }
 
-/* Card layout for containers */
 .card-container {
     background: #ffffff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    width: 100%;            /* Makes cards fill the full 460px width perfectly */
+    width: 100%;            
     box-sizing: border-box;
 }
 
@@ -86,7 +68,7 @@ body {
     order: 2;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers the massive bar */
+    align-items: center; 
 }
 
 #nav-login-btn {
@@ -98,7 +80,7 @@ body {
     background-color: #2980b9;
 }
 
-/* Modal Overlay (Dark background) */
+/*modal overlay (dark background)*/
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -112,15 +94,14 @@ body {
     z-index: 1000;
 }
 
-/* Modal Content Box */
+/*modal content box*/
 .modal-content {
     position: relative;
     width: 100%;
-    max-width: 400px; /* Restricts the login box from stretching too wide */
+    max-width: 400px;
     animation: fadeIn 0.3s ease;
 }
 
-/* Close 'X' Button */
 #close-modal-btn {
     position: absolute;
     top: 15px;
@@ -146,6 +127,10 @@ body {
     .card-container {
         width: 100%;
     }
+    #growth-chart-wrapper > div, 
+    #history-chart-wrapper > div {
+        min-width: 600px;
+    }
 }
 
 
@@ -154,7 +139,7 @@ body {
     display: none !important;
 }
 
-/* Form Styles */
+/*form styles*/
 p{
     margin-bottom: 10px;
     color: #333;
@@ -194,7 +179,7 @@ button:hover {
     background-color: #27ae60;
 }
 
-/* Tracker specific styles */
+/*tracker styles*/
 .header-row {
     display: flex;
     justify-content: space-between;
@@ -218,30 +203,30 @@ button:hover {
     font-size: 18px;
     font-weight: 600;
     margin: 20px 0 10px 0;
-    width: 100%; /* Add this line to force it to stretch wide */
+    width: 100%;
 }
 
-/* Progress Bar */
+/*progress bar*/
 .progress-bar-bg {
-    background-color: #2c3e50; /* Dark premium slate color so the blue stands out */
-    border-radius: 6px;        /* Crisp modern rectangle edges */
+    background-color: #2c3e50; 
+    border-radius: 6px;        
     overflow: hidden;
     margin: 30px auto;
     
-    width: 140px;              /* Noticeable horizontal block presence */
-    height: 50vh;              /* Massive screen presence */
+    width: 140px;              
+    height: 50vh;              
     min-height: 350px;
     
-    /* Forces the fill to anchor to the floor and climb up */
+    /*forces the fill to anchor to the floor and climb up*/
     display: flex;
     flex-direction: column;
     justify-content: flex-end; 
-    box-shadow: inset 0 4px 12px rgba(0,0,0,0.2); /* Deep inner depth shadow */
+    box-shadow: inset 0 4px 12px rgba(0,0,0,0.2);
 }
 
 #progress-fill {
     width: 100%;       
-    height: 0%; /* Start empty, controlled by JS */
+    height: 0%;
     color: white;
     font-size: 22px;    
     font-weight: 800;
@@ -251,7 +236,7 @@ button:hover {
     justify-content: center;
     box-sizing: border-box;
     
-    /* The moving stripe texture overlay */
+    /*moving stripe pattern*/
     background-image: linear-gradient(
         45deg, 
         rgba(255, 255, 255, 0.15) 25%, 
@@ -263,9 +248,8 @@ button:hover {
         transparent
     );
     background-size: 40px 40px; 
-    background-color: #3498db; /* Liquid Blue filling color! */
+    background-color: #3498db;
     
-    /* Smooth vertical climbing fluid animation */
     transition: height 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
     animation: fillSurge 1.5s linear infinite;
 }
@@ -282,7 +266,6 @@ hr {
     margin-bottom: 20px;
 }
 
-/* Real-Time Countdown Styling */
 .countdown-container {
     text-align: center;
     background-color: #f8f9fa;
@@ -294,10 +277,10 @@ hr {
 }
 
 #countdown-timer {
-    font-family: 'Courier New', Courier, monospace; /* Monospace keeps numbers from jumping around */
+    font-family: 'Courier New', Courier, monospace; 
     font-size: 24px;
     font-weight: bold;
-    color: #e74c3c; /* Matches your chart's deadline theme color */
+    color: #e74c3c; 
     letter-spacing: 1px;
     margin-top: 5px;
 }

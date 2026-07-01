@@ -1,7 +1,7 @@
 // --- STATE MANAGEMENT ---
 let currentRaised = 0;
 let currentUserRaised = 0;
-let currentUserHistory = []; // Tracks specific individual donations
+let currentUserHistory = []; //Tracks specific individual donations
 const goalAmount = 30000;
 
 const allowedUsers = [
@@ -116,7 +116,7 @@ const allowedUsers = [
 let loggedInUser = null; 
 let currentDayIndexGlobal = 0;
 
-// PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT URL HERE!
+// Link to Google Apps Script (For Spreadsheet)
 const CONFIG_URL = "https://script.google.com/macros/s/AKfycbxirbQqB31Jm9blojaJM2v0xQr-hI4-DaVw93wCiGOKbn5Nqz_d4heFg-l3KpA8qRWdfQ/exec";
 
 const campaignStart = new Date("2026-06-09T19:30:00");
@@ -177,7 +177,6 @@ const growthChart = new Chart(ctxGrowth, {
                 title: { display: true, text: 'Total Amount Raised ($)' } 
             } 
         },
-        // --- ADD THIS PLUGINS SECTION FOR CUSTOM TOOLTIPS ---
         plugins: {
             tooltip: {
                 callbacks: {
@@ -185,12 +184,11 @@ const growthChart = new Chart(ctxGrowth, {
                         let label = context.dataset.label || '';
                         let value = context.parsed.y;
                         
-                        // If it's the projection line, append the "per day" target calculation
                         if (context.datasetIndex === 1) {
                             return `${label}: $${value.toLocaleString()} (Target: $${window.dailyProjectedRate}/day)`;
                         }
                         
-                        // Standard display for actual progress
+                        //Standard display for actual progress
                         return `${label}: $${value.toLocaleString()}`;
                     }
                 }
@@ -222,7 +220,7 @@ const historyChart = new Chart(ctxHistory, {
             },
             x: {
                 ticks: { 
-                    display: false // This strictly keeps the date text hidden on the axis layout
+                    display: false //Hide date on axis
                 }, 
                 title: { display: true, text: 'Timeline Progress' }
             }
@@ -230,7 +228,7 @@ const historyChart = new Chart(ctxHistory, {
     }
 });
 
-// --- LOAD DATA FROM GOOGLE SHEETS ---
+//Loading data from Google Sheets
 async function loadDonationTotal() {
     try {
         raisedAmountSpan.textContent = "Loading..."; 
@@ -263,11 +261,10 @@ function updateUI() {
     let percentage = (currentRaised / goalAmount) * 100;
     if (percentage > 100) percentage = 100;
     
-    // 1. Grow the green fill vertically
+    //Vertical Growth for progress bar
     progressFill.style.height = `${percentage}%`;
-    progressFill.textContent = ""; // Keep this blank!
+    progressFill.textContent = "";
     
-    // 2. Update the static centered text label
     if (progressPercentageLabel) {
         progressPercentageLabel.textContent = `${Math.round(percentage)}%`;
     }
@@ -278,11 +275,9 @@ function updateUI() {
     const now = new Date();
     const timeElapsedMs = now - campaignStart;
     
-    // Create clean midnight-based timestamps to calculate accurate calendar days
     const startMidnight = new Date(campaignStart.getFullYear(), campaignStart.getMonth(), campaignStart.getDate());
     const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
-    // Calculate the absolute difference in calendar days
+
     const currentDayIdx = Math.round((nowMidnight - startMidnight) / (1000 * 60 * 60 * 24));
 
     if (loggedInUser) {
@@ -300,10 +295,8 @@ function updateUI() {
         const remainingToRaise = Math.max(0, personalGoal - currentUserRaised);
         const projectedRateNeeded = remainingToRaise / daysRemaining;
         
-        // Expose this globally so the chart tooltip config above can read it dynamically
         window.dailyProjectedRate = projectedRateNeeded.toFixed(2);    
 
-        // --- 1. Map all donations by explicit date keys safely ---
         const donationsByDateMap = {};
         if (Array.isArray(currentUserHistory)) {
             currentUserHistory.forEach(entry => {
@@ -317,7 +310,7 @@ function updateUI() {
 
         let runningTotal = 0;
 
-        // --- 2. Step through every single day of the timeline ---
+
         for (let i = 0; i <= totalDays; i++) {
             let loopDate = new Date(campaignStart.getTime() + (i * 24 * 60 * 60 * 1000));
             
@@ -329,13 +322,11 @@ function updateUI() {
             let dateStringDisplay = loopDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
             let tooltipDateLabel = loopDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             
-            // X-Axis Label Rules: Label the start, the end, and every 2 weeks
             if (i === 0) {
                 growthLabels.push(`Start (${dateStringDisplay})`);
             } else if (i === totalDays) {
                 growthLabels.push(`End (${dateStringDisplay})`);
             } else if (i % 7 === 0) {
-                // Generates a clean label every 14 days (bi-weekly progress markers)
                 growthLabels.push(dateStringDisplay);
             } else {
                 growthLabels.push("");
@@ -343,21 +334,21 @@ function updateUI() {
 
             historyLabels.push(tooltipDateLabel); 
 
-            // Extract the data value for this day
+            //Extract the data values for this day
             let dailyDonation = donationsByDateMap[strictDateKey] || 0;
 
-            // Populate History Bar Chart array
+            //Populate History Bar Chart array
             historyData.push(dailyDonation);
             if (dailyDonation > maxDailyDonation) {
                 maxDailyDonation = dailyDonation;
             }
 
-            // Populate Cumulative Growth Line array
+            //Populate Cumulative Growth Line array
             if (i <= currentDayIdx) {
-                runningTotal += dailyDonation; // Add today's money to the running sum
-                actualLineData.push(runningTotal); // Push the cumulative total up to this day
+                runningTotal += dailyDonation; //Add today's money to the running sum
+                actualLineData.push(runningTotal); //Push the cumulative total up to this day
                 
-                // Link the projection line to our current total on the transition day
+                //Link the projection line to current total of the day
                 if (i === currentDayIdx) {
                     projectionLineData.push(runningTotal);
                 } else {
@@ -371,14 +362,14 @@ function updateUI() {
             }
         }
 
-        // --- 3. Update the Growth Chart ---
+        //Update the Growth Chart
         growthChart.data.labels = growthLabels;
         growthChart.data.datasets[0].label = `${loggedInUser.firstName}'s Progress (Goal: $${personalGoal})`;
         growthChart.data.datasets[0].data = actualLineData;       
         growthChart.data.datasets[1].data = projectionLineData;   
         growthChart.update();
 
-        // --- 4. Update the History Chart ---
+        //Update the History Chart
         if (historyChart && historyChart.options?.scales?.y) {
             historyChart.options.scales.y.max = maxDailyDonation > 0 ? maxDailyDonation + 50 : 50;
             
@@ -438,7 +429,7 @@ loginForm.addEventListener('submit', function(e) {
         loggedInUser = validUser; 
         loadDonationTotal();
         
-        // Show BOTH charts on login
+        //Show BOTH charts on login
         growthChartWrapper.classList.remove('hidden');
         historyChartWrapper.classList.remove('hidden');
         
@@ -457,7 +448,7 @@ loginForm.addEventListener('submit', function(e) {
 logoutBtn.addEventListener('click', function() {
     loggedInUser = null; 
     
-    // Hide BOTH charts on logout
+    //Hide charts on logout
     growthChartWrapper.classList.add('hidden'); 
     historyChartWrapper.classList.add('hidden'); 
     
